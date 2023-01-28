@@ -1,46 +1,29 @@
 <template>
-   <div @submit="onSubmit" class="wrapp">
-       <h1>Hello from todos</h1>
-       <input type="text" placeholder="Add todo here" />
-       <button type="submit">Add Todo</button>
-
-   </div>
+    <div :key="todo.id" v-for="todo in todos">
+       <h1>Hello From Todos</h1>
+        <p>{{todo.text}}</p>
+        <button @click="onClick(todo)">Delete Todo</button>
+    </div>
 
 </template>
 
 <script>
-   export default{
+  export default{
+       
     name: "Todos",
-
-    data(){
-      return{
-
-          id: Math.floor(Math.random() * 10000),
-         text: "",
-
-      }  
+    props: {
+        todos: Array
     },
     methods:{
-     onSubmit(e) {
-         e.preventDefault()
-
-         if(!this.text){
-                alert("Please add a task")
-                return
-            }
-        
-
-     }
-    }
-
-   }
+        onClick(todo){
+           this.$emit("deleteTodos", todo.id)
+        }
+    },
+    emits: ["deleteTodos"]
+  }
 
 </script>
 
 <style>
-  .wrapp{
-    border: 1px solid black;
-    height: 50vh;
-  }
 
 </style>
